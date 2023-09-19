@@ -29,10 +29,6 @@ const data = await walletClient.writeContract({
         gasPerPubdata: utils.DEFAULT_GAS_PER_PUBDATA_LIMIT,
         paymasterParams,
       },
-      gasPrice: gasPrice,
-      maxFeePerGas: gasPrice,
-      maxPriorityFeePerGas: parseGwei("0"),
-      gasLimit: gasLimit,
 });
 ```
 
@@ -40,22 +36,26 @@ const data = await walletClient.writeContract({
 
 ### Prerequisites
 
-Ensure you have `yarn` installed.
+Ensure you have `yarn` or `pnpm` installed.
 
-### Installation
+### Run example
 
-Install the required dependencies:
+1. Change directories:
 
 ```bash
-yarn install
+cd write-contract-example 
 ```
 
-### Execution
-
-Run the main script:
+2. Install the required dependencies:
 
 ```bash
-node index.js
+pnpm install
+```
+
+3. Run development server:
+
+```bash
+pnpm dev
 ```
 
 **Note:** There's no requirement to compile or deploy contracts for this example. The script utilizes contracts previously deployed on the zkSync Era testnet.
