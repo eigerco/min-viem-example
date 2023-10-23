@@ -15,7 +15,7 @@ if (!PRIVATE_KEY)
 
 export default async function (hre: HardhatRuntimeEnvironment) {
   console.log(`Running deploy script for the GaslessPaymaster contract...`);
-  const provider = new Provider("https://testnet.era.zksync.dev");
+  const provider = new Provider("http://127.0.0.1:3050");
 
   // The wallet that will deploy the token and the paymaster
   // It is assumed that this wallet already has sufficient funds on zkSync
@@ -42,21 +42,6 @@ export default async function (hre: HardhatRuntimeEnvironment) {
 
   let paymasterBalance = await provider.getBalance(paymaster.address);
   console.log(`Paymaster ETH balance is now ${paymasterBalance.toString()}`);
-
-  // Verify contract programmatically
-  //
-  // Contract MUST be fully qualified name (e.g. path/sourceName:contractName)
-  const contractFullyQualifedName =
-    "contracts/GaslessPaymaster.sol:GaslessPaymaster";
-  const verificationId = await hre.run("verify:verify", {
-    address: paymaster.address,
-    contract: contractFullyQualifedName,
-    constructorArguments: [],
-    bytecode: paymasterArtifact.bytecode,
-  });
-  console.log(
-    `${contractFullyQualifedName} verified! VerificationId: ${verificationId}`,
-  );
-
+  
   console.log(`Done!`);
 }

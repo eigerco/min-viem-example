@@ -9,14 +9,17 @@
   "dependencies": {
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "viem": "latest"
+    "rfrf": "link:rfrf",
+    "viem": "^1.16.6",
+    "viem_zksync": "link:viem_zksync",
+    "viem_zksync_chains": "link:viem_zksync_chains"
   },
   "devDependencies": {
-    "@types/react": "^18.0.27",
-    "@types/react-dom": "^18.0.10",
+    "@types/react": "^18.2.28",
+    "@types/react-dom": "^18.2.13",
     "@vitejs/plugin-react": "^3.1.0",
-    "typescript": "^5.0.3",
-    "vite": "^4.4.2",
+    "typescript": "^5.2.2",
+    "vite": "^4.4.11",
     "zksync-web3": "^0.14.3"
   }
 }
