@@ -1,5 +1,5 @@
 export const greeterContract = {
-  address: '0x111C3E89Ce80e62EE88318C2804920D4c96f92bb',
+  address: '0xbe9bcf56654fd81a921b6Bd07965Dd67Afbb0B69',
   abi: [
     {
       inputs: [

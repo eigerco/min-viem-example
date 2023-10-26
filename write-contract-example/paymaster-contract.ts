@@ -1,5 +1,5 @@
 export const gaslessPaymasterContract = {
-    address: '0x4B5DF730c2e6b28E17013A1485E5d9BC41Efe021',
+    address: '0x8250376a196f50656d6d62234D4554C9eEc2a594',
     abi: [
         {
             anonymous: false,

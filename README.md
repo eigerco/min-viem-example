@@ -85,3 +85,43 @@ sign the transaction. After that click `Read Greet` and should display `Hi David
 ## Debugging 
 
 It can help get the https://github.com/matter-labs/paymaster-examples to check the expected behaviour.
+
+## Troubleshooting
+
+### Stuck Transaction
+
+If a transaction goes throught but the transaction receipt has some null values and empty log, the
+nonce is being wrongly calculated. This can be a cache issue or something else.
+
+**Request**
+
+{"jsonrpc":"2.0","method":"eth_getTransactionReceipt","params":["0xa0c7ac3a86bc1a140afaa29f05e7badb4932b5c980757af5ff02f1e091d3e74c"], "id": 1}
+
+**Response**
+
+```javascript
+{
+    "jsonrpc": "2.0",
+    "result": {
+        "transactionHash": "0xa0c7ac3a86bc1a140afaa29f05e7badb4932b5c980757af5ff02f1e091d3e74c",
+        "transactionIndex": "0x0",
+        "blockHash": null,
+        "blockNumber": null,
+        "l1BatchTxIndex": null,
+        "l1BatchNumber": null,
+        "from": "0xf760bdd822fccf93c44be68d94c45133002b3037",
+        "to": "0xbe9bcf56654fd81a921b6bd07965dd67afbb0b69",
+        "cumulativeGasUsed": "0x0",
+        "gasUsed": "0x4dc96",
+        "contractAddress": null,
+        "logs": [],
+        "l2ToL1Logs": [],
+        "status": null,
+        "root": null,
+        "logsBloom": "0x00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+        "type": "0x71",
+        "effectiveGasPrice": "0x0"
+    },
+    "id": 1
+}
+```

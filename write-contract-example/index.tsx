@@ -9,23 +9,41 @@ import {
   createWalletClient,
   custom,
   stringify,
+//} from "viem"
 } from "viem_zksync";
 // This is needed because `viem_zksync/chains` doesn't work
-import { zkSyncLocalnet } from "viem_zksync_chains";
-import { signTypedData } from 'viem/wallet'
+import { zkSyncTestnet } from "viem_zksync_chains";
 import "viem/window";
 import { greeterContract } from "./greeter-contract";
 import { gaslessPaymasterContract } from "./paymaster-contract";
 import { utils } from "zksync-web3";
 
+// This way we can the serializers without defining a new chain in Viem.
+/*const zkSyncLocalnet = {
+  ...zkSyncTestnet,
+  id: 270,
+  rpcUrls: {
+    default: {
+      http: ['http://127.0.0.1:3050'],
+      webSocket: ['ws://127.0.0.1:3051/ws'],
+    },
+    public: {
+      http: ['http://127.0.0.1:3050'],
+      webSocket: ['ws://127.0.0.1:3051/ws'],
+    },
+  },
+}*/
+
+const chain = zkSyncTestnet // zkSyncLocalnet
+
 // create clients
 const publicClient = createPublicClient({
-  chain: zkSyncLocalnet,
+  chain: chain,
   transport: http(),
 });
 // explore custom transport?
 const walletClient = createWalletClient({
-  chain: zkSyncLocalnet,
+  chain: chain,
   transport: custom(window.ethereum),
 });
 
@@ -38,6 +56,7 @@ function Example() {
   const connect = async () => {
     const [address] = await walletClient.requestAddresses();
     setAccount(address);
+    console.log("SetAccount: " + address)
   };
 
   // setGreeting message without using paymaster
@@ -62,6 +81,7 @@ function Example() {
     // Change message
     const hash = await walletClient.writeContract(request);
     setHash(hash);
+    console.log(`Hash: ${hash}`)
   };
 
   // setGreeting message using paymaster
@@ -139,12 +159,13 @@ function Example() {
     if (!account) return;
     
     // 'Hi David4' string
-    const transaction_data = '0xa4136862000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000094869204461766964340000000000000000000000000000000000000000000000' as `0x${string}`
+    const transaction_data = '0xa4136862000000000000000000000000000000000000000000000000000000000000002000000000000000000000000000000000000000000000000000000000000000094869204461766964360000000000000000000000000000000000000000000000' as `0x${string}`
 
     // Step Version of making a transaction for debug stuff.
 
     // Calculate the Nonce 
     // Calculate the gasLimit (gas?)
+    console.log('prepareTransactionRequest')
     const prepareTransactionRequest = await publicClient.prepareTransactionRequest({
       account: account,
       to: greeterContract.address,
@@ -156,10 +177,11 @@ function Example() {
       paymasterInput: params.paymasterInput
     })
 
+    console.log(prepareTransactionRequest)
     //
     // Sign transaction, generate CustomSignature
     //
-    console.log("Sign transaction")
+    
     const transactionToSign = {
       txType: 113n,
       from: BigInt(account),
@@ -177,12 +199,13 @@ function Example() {
     }
     console.log(transactionToSign)
 
+    console.log("signTypedData")
     const customSignature = await walletClient.signTypedData({
       account, 
       domain: {
         name: 'zkSync',
         version: '2',
-        chainId: 270
+        chainId: chain.id
       },
       types: {
         Transaction: [
@@ -205,8 +228,12 @@ function Example() {
       message: transactionToSign,
     })
 
+    console.log(customSignature)
+    console.log("signTransaction")
     const signTransaction = await walletClient.signTransaction({...prepareTransactionRequest, customSignature: customSignature})
-    
+    console.log(signTransaction)
+
+    console.log("sendRawTransaction")
     const transaction_hash = await walletClient.sendRawTransaction({serializedTransaction: signTransaction})
     console.log("hash")
     console.log(transaction_hash)
@@ -227,6 +254,9 @@ function Example() {
         innerInput: new Uint8Array(),
       }
     );
+
+    console.log('paymasterParams')
+    console.log(paymasterParams)
 
     return {
       gasPerPubdata: BigInt(utils.DEFAULT_GAS_PER_PUBDATA_LIMIT),
