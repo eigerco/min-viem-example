@@ -86,7 +86,16 @@ sign the transaction. After that click `Read Greet` and should display `Hi David
 
 It can help get the https://github.com/matter-labs/paymaster-examples to check the expected behaviour.
 
+`http.ts` in Viem can be useful to check which call are being made.
+
 ## Troubleshooting
+
+### Failed to execute postMessage
+```
+for (const key of exclude)...<omitted>... } could not be cloned.
+```
+It means a object was passed to MetaMask and cannot clone it internally. Normally is because `chain` object is given to a MetaMask request.
+
 
 ### Stuck Transaction
 

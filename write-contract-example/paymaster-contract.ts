@@ -1,5 +1,7 @@
+// Localnet - 0x4B5DF730c2e6b28E17013A1485E5d9BC41Efe021
+// Testnet - 0xFD9aE5ebB0F6656f4b77a0E99dCbc5138d54b0BA
 export const gaslessPaymasterContract = {
-    address: '0x8250376a196f50656d6d62234D4554C9eEc2a594',
+    address: '0xFD9aE5ebB0F6656f4b77a0E99dCbc5138d54b0BA',
     abi: [
         {
             anonymous: false,
