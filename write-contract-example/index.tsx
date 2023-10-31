@@ -36,6 +36,7 @@ import { utils } from "zksync-web3";
 
 const chain = zkSyncTestnet // zkSyncLocalnet
 
+console.log(zkSyncTestnet)
 // create clients
 const publicClient = createPublicClient({
   chain: chain,
@@ -288,8 +289,7 @@ function Example() {
     return (
       <>
         <div>Connected: {account}</div>
-        <button onClick={setGreetingWithPaymaster}>Set greeting with paymaster (not working)</button>
-        <button onClick={setGreetingWithPaymasterLongerVersion}>Set greeting with paymaster longer version</button>
+        <button onClick={setGreetingWithPaymaster}>Set greeting with paymaster (writeContract)</button>
         <button onClick={setGreeting}>Set greeting</button>
         <button onClick={readGreet}>Read Greet</button>
         

@@ -11,7 +11,8 @@
     "react-dom": "^18.2.0",
     "rfrf": "link:rfrf",
     "viem": "^1.16.6",
-    "viem_zksync": "link:viem_zksync"
+    "viem_zksync": "link:viem_zksync",
+    "viem_zksync_chains": "link:viem_zksync_chains"
   },
   "devDependencies": {
     "@types/react": "^18.2.28",
